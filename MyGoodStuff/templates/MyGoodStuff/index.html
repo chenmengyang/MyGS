@@ -12,31 +12,21 @@
     <table>
         <thead>
           <tr>
-            <th width="200">Table Header</th>
-            <th>Table Header</th>
-            <th width="150">Table Header</th>
-            <th width="150">Table Header</th>
+            <th width="150">状态</th>
+            <th>标题</th>
+            <th width="150">发布日期</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Content Goes Here</td>
-            <td>This is longer content Donec id elit non mi porta gravida at eget metus.</td>
-            <td>Content Goes Here</td>
-            <td>Content Goes Here</td>
-          </tr>
-          <tr>
-            <td>Content Goes Here</td>
-            <td>This is longer Content Goes Here Donec id elit non mi porta gravida at eget metus.</td>
-            <td>Content Goes Here</td>
-            <td>Content Goes Here</td>
-          </tr>
-          <tr>
-            <td>Content Goes Here</td>
-            <td>This is longer Content Goes Here Donec id elit non mi porta gravida at eget metus.</td>
-            <td>Content Goes Here</td>
-            <td>Content Goes Here</td>
-          </tr>
+            {% for post in posts %}
+                <tr>
+                    <th>{{post.status}}</th>
+                    <th>
+                        <a href="{% url 'imagePostDetail' post.id %}">{{ post.title }}</a>
+                    </th>
+                    <th>{{post.postDate}}</th>
+                </tr>
+            {% endfor %}
         </tbody>
       </table>      
 </body>

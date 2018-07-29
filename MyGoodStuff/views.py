@@ -1,6 +1,5 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
-# from django.template import loader
 
 # being init fb
 import firebase_admin
@@ -13,15 +12,14 @@ db = firestore.client()
 
 def index(request):
     # doc_ref = db.collection(u'cl-dgy').document(u'3167048')
-    # msg = ''
-    # try:
-    #     doc = doc_ref.get()
-    #     msg = doc.to_dict()
-    #     # print(u'Document data: {}'.format(doc.to_dict()))
-    # except:
-    #     msg = 'error'
-    #     # print(u'No such document!')
-    return render(request, 'MyGoodStuff/index.html', {'posts': []})
+    docs = (doc.to_dict() for doc in db.collection(u'cl-dgy').get())
+    posts = ({
+        'id': int(p['id']),
+        'status': p['status']['light'],
+        'title': p['title'],
+        'postDate': p['postDate'].replace('TOP:',''),
+    } for p in docs)
+    return render(request, 'MyGoodStuff/index.html', {'posts': posts})
     # return HttpResponse(u'Document data: {}'.format(msg))
 
 
