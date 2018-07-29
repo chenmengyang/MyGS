@@ -1,4 +1,6 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
+from django.shortcuts import render
+# from django.template import loader
 
 # being init fb
 import firebase_admin
@@ -10,14 +12,26 @@ db = firestore.client()
 # end init fb
 
 def index(request):
-    doc_ref = db.collection(u'cl-dgy').document(u'3167048')
-    msg = ''
-    try:
-        doc = doc_ref.get()
-        msg = doc.to_dict()
-        # print(u'Document data: {}'.format(doc.to_dict()))
-    except google.cloud.exceptions.NotFound:
-        msg = 'error'
-        # print(u'No such document!')
+    # doc_ref = db.collection(u'cl-dgy').document(u'3167048')
+    # msg = ''
+    # try:
+    #     doc = doc_ref.get()
+    #     msg = doc.to_dict()
+    #     # print(u'Document data: {}'.format(doc.to_dict()))
+    # except:
+    #     msg = 'error'
+    #     # print(u'No such document!')
+    return render(request, 'MyGoodStuff/index.html', {'posts': []})
+    # return HttpResponse(u'Document data: {}'.format(msg))
 
-    return HttpResponse(u'Document data: {}'.format(msg))
+
+def imagePostDetail(request, postId):
+    fb_ref = db.collection(u'cl-dgy').document(str(postId))
+    try:
+        fb_data = fb_ref.get().to_dict()
+        # print(u'Document data: {}'.format(doc.to_dict()))
+    except:
+        raise Http404("Blog does not exist")
+    # template = loader.get_template('goods/post.html')
+    # return HttpResponse(template.render({}, request))
+    return render(request, 'MyGoodStuff/post.html', {'post': fb_data})

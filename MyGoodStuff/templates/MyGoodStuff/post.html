@@ -1,0 +1,11 @@
+<h1>{{ post.title }}</h1>
+
+{% for link in post.photoUrls %}
+    <img src="{{link}}" alt="opps" />
+{% endfor %}
+
+<ul>
+{% for text in post.comments %}
+    <li>{{ text }}</li>
+{% endfor %}
+</ul>
