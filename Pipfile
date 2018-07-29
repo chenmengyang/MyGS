@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 gunicorn = "*"
 pur = "*"
+django = "*"
+firebase-admin = "*"
+django-heroku = "*"
 
 [dev-packages]
 
